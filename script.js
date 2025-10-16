@@ -15,9 +15,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileSearchOverlay = document.getElementById('mobileSearchOverlay'); 
     const closeSearchBtn = document.getElementById('closeSearchBtn'); 
     const searchInputFloat = document.getElementById('searchInputFloat'); 
+    
+    // Botón del Hero (Ver Paletas Top)
+    const heroButton = document.querySelector('.btn-hero'); 
 
     // ** IMPORTANTE: PEGA AQUÍ LA URL CSV DE TU HOJA DE GOOGLE SHEETS **
-    // Esta debe ser la URL pública obtenida tras "Publicar en la web" como CSV.
     const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTQ8C5Zaqbzrr5kH66ewK9_-GfwM0ELXODsNE3oTmSHS6M96kzKpS6gwNf1WItl9pce234KcWXVEmMu/pub?gid=0&single=true&output=csv'
     let PRODUCTS_DATA = []; // Almacenará los productos cargados del CSV
 
@@ -26,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // I. CARGA Y RENDERIZADO DEL CATÁLOGO
     // ----------------------------------------
 
-    /** Carga los datos del CSV y renderiza el catálogo inicial. */
+    /** Carga los datos del CSV, los parsea y llama al filtro inicial. */
     async function loadCatalog() {
         try {
             productGrid.innerHTML = '<p>Cargando catálogo, un momento...</p>';
@@ -41,9 +43,18 @@ document.addEventListener('DOMContentLoaded', () => {
             // 2. Parsear el CSV a un array de objetos
             PRODUCTS_DATA = parseCsv(csvText); 
 
-            // 3. Renderizar los productos iniciales y asignar eventos
-            renderProducts(PRODUCTS_DATA);
-             
+            // 3. NUEVA LÓGICA: DETECCIÓN DE PÁGINA Y FILTRO INICIAL
+            const currentPath = window.location.pathname.toLowerCase();
+            let initialFilter = 'all';
+
+            // Comprobamos si la URL contiene 'paletas.html' (o el nombre que uses)
+            if (currentPath.includes('paletas.html')) {
+                initialFilter = 'paleta'; 
+            }
+            
+            // Renderiza la vista inicial (filtrada o completa)
+            filterProductsByCategory(initialFilter);
+
         } catch (error) {
             console.error("Error al cargar o parsear el catálogo:", error);
             productGrid.innerHTML = '<p style="color: red;">⚠️ Error al cargar el catálogo. Por favor, revisa la URL del CSV y la conexión.</p>';
@@ -68,7 +79,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const name = producto.nombre || 'Producto sin nombre';
             const price = producto.precio || 'Consultar';
             const desc = producto.descripcion || 'Descripción no disponible.';
-            const imgUrl = producto.imagen_url || 'https://via.placeholder.com/300x200?text=Sin+Imagen';
+            // Asegúrate de usar la columna 'imagen_url'
+            const imgUrl = producto.imagen_url || 'https://via.placeholder.com/300x200?text=Sin+Imagen'; 
 
             // Construcción del HTML de la tarjeta
             card.innerHTML = `
@@ -86,45 +98,64 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ----------------------------------------
-    // II. FUNCIONALIDAD DEL BUSCADOR (FILTRADO)
+    // II. FUNCIONALIDAD DE FILTRADO GENERAL
+    // ----------------------------------------
+
+    /** Filtra y renderiza productos según una categoría específica. */
+    function filterProductsByCategory(category) {
+        if (!category || category === 'all') {
+            // Mostrar todos si no hay filtro o es 'all'
+            renderProducts(PRODUCTS_DATA);
+            return;
+        }
+        
+        // Filtramos el array global (PRODUCTS_DATA)
+        const filteredResults = PRODUCTS_DATA.filter(producto => {
+            // IMPORTANTE: Busca la columna 'categoria' en tu Google Sheet
+            return producto.categoria && producto.categoria.toLowerCase() === category.toLowerCase();
+        });
+
+        // Renderizamos los resultados filtrados
+        renderProducts(filteredResults);
+        
+        // Volvemos a asignar los event listeners a los nuevos botones de detalle
+        initDetailButtons(); 
+    }
+
+    // ----------------------------------------
+    // III. FUNCIONALIDAD DEL BUSCADOR (FILTRADO POR TEXTO)
     // ----------------------------------------
 
     /** Maneja la lógica de búsqueda y filtrado del catálogo. */
     function handleSearchFloat() {
+        // ... (Tu código handleSearchFloat se mantiene igual)
         const query = searchInputFloat.value.trim().toLowerCase();
         
         if (query.length > 0) {
-            // 1. Filtrar el array global de productos (busca en nombre y descripción)
             const resultados = PRODUCTS_DATA.filter(producto => {
                 const searchString = `${producto.nombre} ${producto.descripcion}`.toLowerCase();
                 return searchString.includes(query);
             });
-
-            // 2. Renderizar solo los resultados filtrados
             renderProducts(resultados);
             
-            // 3. Ocultar el overlay
             mobileSearchOverlay.classList.remove('active');
             searchInputFloat.value = '';
 
         } else {
             // Si el campo está vacío, restauramos todos los productos
-            renderProducts(PRODUCTS_DATA); 
+            filterProductsByCategory('all'); // Usamos el filtro 'all' para restaurar la vista original
             mobileSearchOverlay.classList.remove('active');
         }
     }
 
     // ----------------------------------------
-    // III. FUNCIONALIDAD DEL BOTÓN "VER DETALLE"
+    // IV. FUNCIONALIDAD DEL BOTÓN "VER DETALLE"
     // ----------------------------------------
 
     /** Asigna el listener de click a todos los botones 'Ver Detalle'. */
     function initDetailButtons() {
-        // Obtenemos los botones recién renderizados
         const detailButtons = document.querySelectorAll('.btn-detail');
-
         detailButtons.forEach(button => {
-            // Evitamos duplicar listeners al renderizar nuevamente
             button.removeEventListener('click', handleDetailClick); 
             button.addEventListener('click', handleDetailClick);
         });
@@ -132,42 +163,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /** Muestra la información del producto seleccionado (Simulación). */
     function handleDetailClick(e) {
-        // Obtiene el ID del producto desde el atributo data-id
+        // ... (Tu código handleDetailClick se mantiene igual)
         const productId = e.currentTarget.getAttribute('data-id'); 
-        
-        // Busca la información del producto en el array cargado
         const productInfo = PRODUCTS_DATA.find(p => p.id === productId);
 
         if (productInfo) {
-             alert(`--- DETALLE DEL PRODUCTO ---\n\nID: ${productInfo.id}\nNombre: ${productInfo.nombre}\nPrecio: $${productInfo.precio}\nDescripción: ${productInfo.descripcion}\n\nAquí se debería cargar una ventana modal (popup) con más fotos, especificaciones técnicas y un enlace directo a WhatsApp para ese producto.`);
+            alert(`--- DETALLE DEL PRODUCTO ---\n\nID: ${productInfo.id}\nNombre: ${productInfo.nombre}\nPrecio: $${productInfo.precio}\nDescripción: ${productInfo.descripcion}\n\nAquí se debería cargar una ventana modal (popup) con más fotos, especificaciones técnicas y un enlace directo a WhatsApp para ese producto.`);
         } else {
             alert(`No se encontró información para el producto ID: ${productId}`);
         }
     }
 
     // ----------------------------------------
-    // IV. FUNCIONES AUXILIARES (Parser Básico CSV)
+    // V. FUNCIONES AUXILIARES (Parser Básico CSV)
     // ----------------------------------------
 
     /** Convierte el texto CSV en un array de objetos JavaScript. */
     function parseCsv(csvText) {
+        // ... (Tu código parseCsv se mantiene igual)
         const rows = csvText.trim().split('\n');
-        
-        // La primera línea son los encabezados (keys)
         const headers = rows[0].split(',').map(header => header.trim().toLowerCase());
-        
         const data = [];
         
         for (let i = 1; i < rows.length; i++) {
             const values = rows[i].split(',');
             const item = {};
-            
-            // Crea el objeto { header: value }
             headers.forEach((header, index) => {
                 item[header] = values[index] ? values[index].trim() : '';
             });
             
-            // Solo agrega si el campo ID no está vacío
             if (item.id) {
                 data.push(item);
             }
@@ -177,14 +201,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // ----------------------------------------
-    // V. INICIALIZACIÓN Y EVENTOS DE INTERFAZ
+    // VI. EVENTOS DE INTERFAZ Y FILTRADO
     // ----------------------------------------
     
-    // 1. Carga inicial del catálogo
+    // 1. Carga inicial del catálogo (¡ahora usa la nueva lógica de filtro!)
     loadCatalog(); 
 
+    // 2. Eventos del Botón del Hero ("VER PALETAS TOP")
+    if (heroButton) {
+        heroButton.addEventListener('click', (e) => {
+            const filterCategory = e.currentTarget.getAttribute('data-filter');
+            
+            // Opcional: Desplazarse al grid de productos
+            document.querySelector('.product-grid').scrollIntoView({ behavior: 'smooth' });
 
-    // 2. Eventos del Menú Hamburguesa
+            // Ejecutar la función de filtrado
+            filterProductsByCategory(filterCategory);
+        });
+    }
+
+    // 3. Eventos del Menú Hamburguesa
+    // ... (Tu código de eventos de menú y buscador se mantiene igual)
+    
     if (menuToggle) {
         menuToggle.addEventListener('click', () => {
             navMenu.classList.toggle('active');
@@ -192,7 +230,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Cierra el menú al hacer clic en un enlace
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
             if (navMenu.classList.contains('active') && window.innerWidth <= 768) {
@@ -201,7 +238,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    // 3. Eventos del Buscador Flotante
     if (searchToggle) {
         searchToggle.addEventListener('click', () => {
             mobileSearchOverlay.classList.add('active');

@@ -509,6 +509,13 @@ footer {
     color: var(--color-primary-celeste); /* Hover en Celeste */
 }
 
+.footer-section .nav-links a{
+    color: #fff;
+}
+#navMenu a{
+    color: #fff;
+    text-decoration: none;
+}
 
 /* ========================================= */
 /* RESPONSIVE DESIGN (Móvil) */
