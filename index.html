@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Padel - Tu Tienda</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <div class="header-content container">
+            
+            <div class="logo">
+                <h1>Locos por <span class="accent">el Padel</span></h1>
+            </div>
+
+            <nav class="nav-menu" id="navMenu">
+                <a href="#inicio">Inicio</a>
+                <a href="#paletas">Paletas</a>
+                <a href="#zapatillas">Zapatillas</a>
+                <a href="#accesorios">Accesorios</a>
+                <a href="#contacto">Contacto</a>
+            </nav>
+                
+                <button class="menu-toggle" id="menuToggle" aria-label="Abrir Menú">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            
+        </div>
+
+        <section class="hero">
+        <div class="hero-content container">
+            <h1>¡DOMINA LA CANCHA!</h1>
+            <p>El catálogo con el equipo de pádel más exclusivo y de alto rendimiento.</p>
+            <button class="btn-hero" data-scroll="#paletas">VER PALETAS TOP</button>
+        </div>
+    </section>
+    
+    <main class="container">
+        <h2>Últimas Novedades y Ofertas</h2>
+        
+        <div class="product-grid">
+
+            <div class="product-card" data-id="paleta-nox-carbon-queantum">
+                <img src="img/paleta_nox_fondo.jpg" alt="Paleta Padel Modelo 1">
+                <h3>Paleta Nox Carbon Quantun</h3>
+                <p class="price">$180.000</p>
+                <p class="desc">Potencia y control. Núcleo EVA HR3. Ideal nivel avanzado.</p>
+                <button class="btn-detail" data-id="paleta-blade-pro-3">Ver Detalle</button>
+            </div>
+
+            <div class="product-card" data-id="zapatillas-grip-x">
+                <img src="https://via.placeholder.com/300x200?text=Zapatillas+Padel" alt="Zapatillas Padel">
+                <h3>Zapatillas Grip-X Padel</h3>
+                <p class="price">$75.000</p>
+                <p class="desc">Máxima amortiguación y suela de espiga profesional.</p>
+                <button class="btn-detail" data-id="zapatillas-grip-x">Ver Detalle</button>
+            </div>
+
+            <div class="product-card" data-id="overgrips-x5">
+                <img src="img/paleta_pro_tour.webp" alt="Overgrips Padel">
+                <h3>Pack Overgrips X5</h3>
+                <p class="price">$12.000</p>
+                <p class="desc">Extra adherencia y durabilidad. Varios colores disponibles.</p>
+                <button class="btn-detail" data-id="overgrips-x5">Ver Detalle</button>
+            </div>
+
+            <div class="product-card">
+        <div class="product-image">
+            <div class="product-badge">NUEVO</div>
+            <img src="img/paleta_pro_tour.webp" alt="Overgrips Padel">
+        </div>
+        
+        <div class="product-content">
+            <div class="product-category">Palas de Pádel</div>
+            <h3 class="product-title">Pala Pro Tour 2024</h3>
+            <p class="product-description">Paleta profesional con balance medio, ideal para jugadores avanzados que buscan control y potencia.</p>
+            
+            <div class="product-price">
+                <span class="current-price">€189,99</span>
+                <span class="original-price">€219,99</span>
+            </div>
+
+            <!-- Especificaciones técnicas (ocultas inicialmente) -->
+            <div class="tech-specs" id="techSpecs">
+                <ul>
+                    <li>Forma: Redonda</li>
+                    <li>Peso: 365g ± 5g</li>
+                    <li>Balance: Medio</li>
+                    <li>Material: Carbono 3K + EVA High Density</li>
+                </ul>
+            </div>
+            
+            <div class="product-actions">
+            
+                <button class="btn btn-primary" id="detailBtn">Ver Detalles</button>
+            </div>
+        </div>
+    </div>
+              
+        </div>
+        </main>
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; 2025 Catálogo Padel. Todos los derechos reservados.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+            </div>
+        </div>
+    </footer>
+    <a href="https://wa.me/XXXXXXXXXXX?text=Hola!%20Estoy%20interesado%20en%20un%20producto%20del%20catálogo%20de%20pádel." 
+       target="_blank" 
+       class="whatsapp-float" 
+       aria-label="Contactar por WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+    <script src="script.js"></script>
+</body>
+</html>

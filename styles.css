@@ -1,0 +1,586 @@
+/* ========================================= */
+/* VARIABLES Y RESET BÁSICO (PALETA CELESTE) */
+/* ========================================= */
+:root {
+    --color-primary-celeste: #00BFFF;    /* Celeste Brillante (Énfasis y Botones) */
+    --color-accent-navy: #003366;       /* Azul Oscuro (Contraste y Precios) */
+    --color-white: #FFFFFF;
+    --color-text: #333333;       
+    --color-light-bg: #f8f8f8;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    background-color: var(--color-white);
+    color: var(--color-text);
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+h1, h2, h3 {
+    margin-bottom: 1rem;
+    color: var(--color-text);
+}
+
+
+/* ========================================= */
+/* HEADER Y NAVEGACIÓN (ESCRITORIO) */
+/* ========================================= */
+header {
+    background: var(--color-text); /* Fondo del header: Negro/Gris Oscuro */
+    padding: 15px 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* LOGO: Celeste + Azul Oscuro */
+.logo h1 {
+    color: var(--color-primary-celeste); /* PADEL es Celeste */
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+.accent {
+    color: var(--color-accent-navy); /* CATÁLOGO es Azul Oscuro */
+}
+
+/* MENÚ DE ESCRITORIO */
+.nav-menu {
+    flex-grow: 1; /* Permite que el menú ocupe el espacio central */
+    text-align: right;
+    margin-right: 20px;
+}
+.nav-menu a {
+    color: var(--color-white);
+    text-decoration: none;
+    margin-left: 20px;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-menu a:hover {
+    color: var(--color-primary-celeste);
+}
+
+/* ICONOS DE HEADER */
+.header-icons {
+    display: flex;
+    align-items: center;
+}
+
+/* Oculta los botones móviles en escritorio */
+.menu-toggle, .search-toggle {
+    display: none; 
+}
+
+
+/* ========================================= */
+/* BUSCADOR FLOTANTE (Oculto por defecto) */
+/* ========================================= */
+.mobile-search-overlay {
+    display: none; 
+}
+
+.mobile-search-overlay.active {
+    display: flex; /* Se activa con JS */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh; 
+    background-color: rgba(0, 0, 0, 0.95); /* Fondo oscuro fuerte */
+    z-index: 1010; 
+    flex-direction: column;
+    align-items: center;
+    padding-top: 50px;
+}
+
+.search-box-float {
+    display: flex;
+    width: 90%;
+    max-width: 500px;
+    background-color: var(--color-white);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.search-box-float input {
+    border: none;
+    flex-grow: 1;
+    padding: 12px 15px;
+    font-size: 1rem;
+    outline: none;
+}
+
+.search-box-float button {
+    background: var(--color-primary-celeste);
+    color: var(--color-white);
+    border: none;
+    padding: 12px 15px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.close-search-btn {
+    background: none;
+    border: none;
+    color: var(--color-white);
+    font-size: 1.5rem;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+/* HERO SECTION */
+/* ========================================= */
+.hero {
+    /* Reemplaza 'hero-bg.jpg' con la ruta a tu imagen de fondo real */
+    background-image:  linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(img/backgraund1.jpg); 
+    background-size: cover;
+    background-position: center;
+    height: 100vh; /* Altura ideal: 60% del alto de la ventana */
+    display: flex;
+    align-items: center; /* Centra el contenido verticalmente */
+    text-align: left;
+    color: var(--color-white);
+    margin-bottom: 40px; /* Separación del catálogo */
+}
+
+.hero-content {
+    /* Asegura que el contenido no ocupe todo el ancho si la pantalla es muy grande */
+    max-width: 600px;
+}
+
+.hero h1 {
+    font-size: 3.5rem; /* Título grande */
+    font-weight: 900;
+    margin-bottom: 1rem;
+    color: var(--color-primary-celeste); /* El color de tu marca: CELESTE */
+    line-height: 1.1;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    font-weight: 300;
+    color: var(--color-white);
+}
+
+.btn-hero {
+    background-color: var(--color-accent-navy); /* Botón en AZUL OSCURO */
+    color: var(--color-white);
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+.btn-hero:hover {
+    background-color: var(--color-primary-celeste); /* Hover en CELESTE */
+    transform: translateY(-2px);
+}
+
+/* ========================================= */
+/* CATÁLOGO DE PRODUCTOS */
+/* ========================================= */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    padding: 20px 0;
+}
+
+.product-card {
+    background-color: var(--color-light-bg);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+.product-card img {
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    object-fit: contain;
+    margin-bottom: 15px;
+}
+
+.product-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 5px;
+}
+
+.price {
+    color: var(--color-accent-navy); 
+    font-weight: bold;
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+}
+
+.desc {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.btn-detail {
+    display: inline-block;
+    background-color: var(--color-primary-celeste);
+    color: var(--color-white);
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-detail:hover {
+    background-color: #009ACD;
+}
+
+/*deepseek*/
+
+.product-card {
+            width: 300px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            font-family: 'Arial', sans-serif;
+            margin: 15px;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+           /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);*/
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff4757;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .product-content {
+            padding: 20px;
+        }
+
+        .product-category {
+            color: #666;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .product-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .product-description {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .current-price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #2ed573;
+        }
+
+        .original-price {
+            font-size: 14px;
+            color: #999;
+            text-decoration: line-through;
+        }
+
+        .product-features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+
+        .product-features li {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+            padding-left: 15px;
+            position: relative;
+        }
+
+        .product-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #2ed573;
+        }
+
+        /* Especificaciones técnicas (ocultas por defecto) */
+        .tech-specs {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background: #f8f9fa;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+
+        .tech-specs.show {
+            max-height: 200px;
+            padding: 15px;
+        }
+
+        .tech-specs ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .tech-specs li {
+            font-size: 13px;
+            color: #555;
+            margin-bottom: 8px;
+            padding-left: 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
+
+        .tech-specs li:last-child {
+            margin-bottom: 0;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .tech-specs li:before {
+            content: "▶";
+            color: #3742fa;
+            margin-right: 8px;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: #3742fa;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2f3542;
+        }
+
+        .btn-secondary {
+            background: #f1f2f6;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .btn-secondary:hover {
+            background: #dfe4ea;
+            border-color: #3742fa;
+        }
+
+        .btn-secondary.active {
+            background: #3742fa;
+            color: white;
+        }
+
+
+/* ========================================= */
+/* WHATSAPP FLOTANTE */
+/* ========================================= */
+.whatsapp-float {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 30px;
+    right: 30px;
+    background-color: #25d366; 
+    color: var(--color-white);
+    border-radius: 50%;
+    text-align: center;
+    font-size: 30px;
+    line-height: 60px;
+    box-shadow: 2px 2px 3px #999;
+    z-index: 1000;
+    text-decoration: none;
+}
+
+.whatsapp-float:hover {
+    background-color: #1ebe55;
+}
+
+/* ========================================= */
+/* FOOTER */
+/* ========================================= */
+footer {
+    background-color: var(--color-text); /* Fondo oscuro */
+    color: #ccc;
+    padding: 20px 0;
+    margin-top: 40px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.social-links a {
+    color: var(--color-white);
+    font-size: 1.5rem;
+    margin-left: 15px;
+    transition: color 0.3s;
+}
+
+.social-links a:hover {
+    color: var(--color-primary-celeste); /* Hover en Celeste */
+}
+
+
+/* ========================================= */
+/* RESPONSIVE DESIGN (Móvil) */
+/* ========================================= */
+@media (max-width: 768px) {
+    /* Header Móvil */
+    .header-content {
+        justify-content: space-between;
+    }
+
+    /* Ocultar el menú de navegación de escritorio */
+    .nav-menu {
+        display: none; 
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 60px; 
+        left: 0;
+        background-color: var(--color-text);
+        padding: 10px 0;
+        box-shadow: 0 4px 5px rgba(0,0,0,0.1);
+        text-align: center;
+        z-index: 999;
+    }
+
+    .nav-menu.active {
+        display: flex; /* Se activa con JS */
+    }
+
+    .nav-menu a {
+        margin: 10px 20px;
+        padding: 5px;
+        border-bottom: 1px solid #444;
+    }
+
+    /* Mostrar los iconos móviles */
+    .menu-toggle, .search-toggle {
+        display: block; 
+        background: none;
+        border: none;
+        color: var(--color-white);
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 0 5px;
+        order: initial; /* Se mantienen al final */
+    }
+
+    .header-icons {
+        order: 1; /* Mueve los iconos a la derecha del logo */
+    }
+    
+    .logo {
+        margin-right: auto; /* Mantiene el logo a la izquierda */
+        margin-left: 0;
+    }
+
+    .hero {
+    /* Reemplaza 'hero-bg.jpg' con la ruta a tu imagen de fondo real */
+    background-image:  linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(img/backgraund_movil1.jpg); 
+    }
+
+    /* Catálogo en móvil */
+    .product-grid {
+        grid-template-columns: 1fr; /* Una columna en móvil */
+    }
+
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .social-links {
+        margin-top: 10px;
+    }
+}
