@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ** IMPORTANTE: PEGA AQUÍ LA URL CSV DE TU HOJA DE GOOGLE SHEETS **
     // Esta debe ser la URL pública obtenida tras "Publicar en la web" como CSV.
-    const CSV_URL = '<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTQ8C5Zaqbzrr5kH66ewK9_-GfwM0ELXODsNE3oTmSHS6M96kzKpS6gwNf1WItl9pce234KcWXVEmMu/pubhtml?widget=true&amp;headers=false"></iframe>'
+    const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTQ8C5Zaqbzrr5kH66ewK9_-GfwM0ELXODsNE3oTmSHS6M96kzKpS6gwNf1WItl9pce234KcWXVEmMu/pub?gid=0&single=true&output=csv'
     let PRODUCTS_DATA = []; // Almacenará los productos cargados del CSV
 
 
