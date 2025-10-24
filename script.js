@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const price = producto.precio || 'Consultar';
             const desc = producto.descripcion || 'Descripción no disponible.';
             // Asegúrate de usar la columna 'imagen_url'
-            const imgUrl = producto.imagen_url || 'https://via.placeholder.com/300x200?text=Sin+Imagen'; 
+            const imgUrl = producto.img_url || 'https://via.placeholder.com/300x200?text=Sin+Imagen'; 
 
             // Construcción del HTML de la tarjeta
             card.innerHTML = `
